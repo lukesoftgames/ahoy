@@ -9,21 +9,19 @@ public class Movement : MonoBehaviour
     public Rigidbody rb;
     public Transform trans;
     public GameObject vec;
+    public GameObject vec2;
+
     public float deadzone;
     public List<float> speed_levels;
 
     private float speed_tol = 0.01f;
     public float turn_control_tol = 0;
 
-    private Vector3 velocity;
-    private Vector3 acceleration;
-
     private int current_speed = 1;
     private float target_speed;
 
-    private float steering_mod = 1;
-    private float speed_mod = 1;
     private Text info;
+    private Text info2;
     // Start is called before the first frame update
     void Start()
     {
@@ -32,6 +30,7 @@ public class Movement : MonoBehaviour
       rb.velocity = new Vector3(0,0,1);
       trans = GetComponent<Transform>();
       info = vec.GetComponent<Text>();
+      info2 = vec2.GetComponent<Text>();
     }
 
     // Update is called once per frame
@@ -44,9 +43,10 @@ public class Movement : MonoBehaviour
       if (Mathf.Abs(turn) > turn_control_tol) {
         rb.AddTorque(transform.up * turn * steering);
       }
-      rb.velocity = Vector3.ClampMagnitude(transform.forward,1);
-      rb.angularVelocity = Vector3.ClampMagnitude(rb.angularVelocity, 0.5f);
+      rb.velocity = Vector3.ClampMagnitude(transform.forward,target_speed);
+      rb.angularVelocity = Vector3.ClampMagnitude(rb.angularVelocity, 0.1f);
       info.text = rb.velocity.ToString();
+      info2.text = rb.angularVelocity.ToString();
       UpdateModel();
     }
 
