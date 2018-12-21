@@ -18,6 +18,7 @@ public class PlayerMovement : MonoBehaviour
     public float gravityScale;
 
     private float gravDistDiff;
+    private float currentAngle;
     private Vector3 gravMoveDist;
     private Vector2 input;
     private float angle;
@@ -27,9 +28,8 @@ public class PlayerMovement : MonoBehaviour
     private float mag;
     private float mag1;
     private float initGravDist;
-
-
     private RaycastHit hitInfo;
+    private RaycastHit hitWall;
 
 
     // Start is called before the first frame update
@@ -51,6 +51,7 @@ public class PlayerMovement : MonoBehaviour
         if (!input.Equals(Vector2.zero))
         {
             CalculateDirection();
+            CalculateCurrentDirection();
             CalculateMove();
             CalculateGroundAngle();
 
@@ -107,7 +108,7 @@ public class PlayerMovement : MonoBehaviour
             // Scale magnitude to users input magnitude
             mag = moveDirection.magnitude;
             mag1 = new Vector3(input.x, 0f, input.y).magnitude;
-            moveDirection = moveDirection * mag1 / mag;
+            moveDirection = moveDirection * mag1 / mag;         
         }
     }
 
@@ -132,16 +133,25 @@ public class PlayerMovement : MonoBehaviour
         angle = Mathf.Rad2Deg * angle;
     }
 
+    void CalculateCurrentDirection()
+    {
+        currentAngle = Mathf.Atan2(transform.forward.x, transform.forward.z);
+        currentAngle = Mathf.Rad2Deg * currentAngle;
+    }
+
     // Transform players position
     void Move()
     {
+        if (Physics.Raycast(transform.position,moveDirection,out hitWall, height, ground))
+        {
+            return;
+        }
         // If surface is not too steep
         if (groundAngle < maxGroundAngle)
         {
             transform.position += moveDirection * moveSpeed * Time.deltaTime;
         }
     }
-
 
     // Rotate player
     void Rotate()
@@ -163,9 +173,9 @@ public class PlayerMovement : MonoBehaviour
             Physics.Raycast(transform.position, -Vector3.up, out hitInfo, transform.position.y + 2, ground);
 
             // Prevent the player from jumping over the plane
-            if (gravMoveDist.y < transform.position.y - hitInfo.distance)
+            if (gravMoveDist.y < hitInfo.point.y + height)
             {
-                gravMoveDist.y = height + transform.position.y - hitInfo.distance;
+                gravMoveDist.y = height + hitInfo.point.y;
             }
             transform.position = gravMoveDist;
         }
@@ -177,9 +187,8 @@ public class PlayerMovement : MonoBehaviour
     {
         if (debug)
         {
-            Debug.DrawLine(transform.position, transform.position + transform.right * height * 4, Color.blue);
+            Debug.DrawLine(transform.position, transform.position + transform.forward * height * 4, Color.blue);
             Debug.DrawLine(transform.position, transform.position + moveDirection * height * 3, Color.green);
-            Debug.DrawLine(transform.position, transform.position + -Vector3.up * hitInfo.distance, Color.black);
 
             Debug.Log(hitInfo.distance);
             Debug.Log(gravMoveDist.y);
