@@ -11,7 +11,7 @@ public class PlayerMovement : MonoBehaviour
     public float moveSpeed;
     private Vector3 moveDirection;
     public float height;
-    public float heigtPadding;
+    public float heightPadding;
     public LayerMask ground;
     public float maxGroundAngle = 150;
     public bool debug;
@@ -72,7 +72,7 @@ public class PlayerMovement : MonoBehaviour
     void CheckGrounded()
     {
         // Produce raycast to ground
-        if (Physics.Raycast(transform.position, -Vector3.up, out hitInfo, height + heigtPadding, ground))
+        if (Physics.Raycast(transform.position, -Vector3.up, out hitInfo, height + heightPadding, ground))
         {
 
             // This is done to stop bouncing
