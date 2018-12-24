@@ -3,10 +3,6 @@
 public class PlayerMovement : MonoBehaviour
 {
 
-    /// <summary>
-    /// SO FAR THIS WORKS EXCEPT WHEN WALKING INTO A WALL FROM THE BACK
-    /// </summary>
-
     public float turnSpeed;
     public float moveSpeed;
     private Vector3 moveDirection;
@@ -16,7 +12,14 @@ public class PlayerMovement : MonoBehaviour
     public float maxGroundAngle = 150;
     public bool debug;
     public float gravityScale;
+    public float width;
 
+    private Vector3 prevGroundMove;
+    private Vector3 groundMove;
+    private Transform prevGround;
+
+    private float counter;
+    private Vector3 prevScale;
     private float gravDistDiff;
     private float currentAngle;
     private Vector3 gravMoveDist;
@@ -29,6 +32,7 @@ public class PlayerMovement : MonoBehaviour
     private float mag1;
     private float initGravDist;
     private RaycastHit hitInfo;
+    private RaycastHit hitGround;
     private RaycastHit hitWall;
 
 
@@ -47,6 +51,7 @@ public class PlayerMovement : MonoBehaviour
         GetInput();
         CheckGrounded();
         ApplyGravity();
+        CalculateGroundMove();
 
         if (!input.Equals(Vector2.zero))
         {
@@ -58,6 +63,7 @@ public class PlayerMovement : MonoBehaviour
             Rotate();
             Move();
         }
+
         DrawDebugLines();
     }
 
@@ -71,6 +77,7 @@ public class PlayerMovement : MonoBehaviour
     // Check if user is touching a ground surface
     void CheckGrounded()
     {
+
         // Produce raycast to ground
         if (Physics.Raycast(transform.position, -Vector3.up, out hitInfo, height + heightPadding, ground))
         {
@@ -78,17 +85,21 @@ public class PlayerMovement : MonoBehaviour
             // This is done to stop bouncing
             if (Vector3.Distance(transform.position, hitInfo.point) < height)
             {
-                transform.position = Vector3.Lerp(transform.position, transform.position + Vector3.up * height, 5 * Time.deltaTime);
+                transform.position = Vector3.Lerp(transform.position, transform.position + Vector3.up * height, Time.deltaTime);
             }
             grounded = true;
 
             // When gravity needs to act the height position must be stored
             initGravDist = transform.position.y;
+            Debug.Log(hitInfo.transform.name);
         }
         else
         {
             grounded = false;
+            Debug.Log(counter);
+            counter++;
         }
+
     }
 
 
@@ -97,6 +108,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (!grounded)
         {
+            
             moveDirection = transform.forward;
         }
         else
@@ -139,17 +151,38 @@ public class PlayerMovement : MonoBehaviour
         currentAngle = Mathf.Rad2Deg * currentAngle;
     }
 
+    void CalculateGroundMove()
+    {
+       // groundMove = hitInfo.transform.position;
+        if (grounded)
+        {
+            if (!hitInfo.transform.Equals(prevGround))
+            {
+                transform.parent = hitInfo.transform;
+            }
+            // transform.SetParent(hitInfo.transform, true);
+            prevGround = hitInfo.transform;
+        }
+
+    }
+
     // Transform players position
     void Move()
     {
         if (Physics.Raycast(transform.position,moveDirection,out hitWall, height, ground))
         {
+            //transform.position += 10*-heightPadding * transform.forward * Time.deltaTime;
             return;
         }
         // If surface is not too steep
         if (groundAngle < maxGroundAngle)
         {
-            transform.position += moveDirection * moveSpeed * Time.deltaTime;
+            if (Input.GetButton("Submit"))
+            {
+                transform.position += (moveDirection * moveSpeed) * Time.deltaTime;
+
+            }
+            transform.position += (moveDirection * moveSpeed) * Time.deltaTime;
         }
     }
 
@@ -170,12 +203,12 @@ public class PlayerMovement : MonoBehaviour
 
             // Calculate how much the player should move with gravitational acceleration
             gravMoveDist = transform.position + Physics.gravity * Mathf.Sqrt(gravDistDiff) * Time.deltaTime * gravityScale;
-            Physics.Raycast(transform.position, -Vector3.up, out hitInfo, transform.position.y + 2, ground);
+            Physics.Raycast(transform.position, -Vector3.up, out hitGround, transform.position.y + 2, ground);
 
             // Prevent the player from jumping over the plane
-            if (gravMoveDist.y < hitInfo.point.y + height)
+            if (gravMoveDist.y < hitGround.point.y + height)
             {
-                gravMoveDist.y = height + hitInfo.point.y;
+                gravMoveDist.y = hitGround.point.y +height;
             }
             transform.position = gravMoveDist;
         }
@@ -189,10 +222,6 @@ public class PlayerMovement : MonoBehaviour
         {
             Debug.DrawLine(transform.position, transform.position + transform.forward * height * 4, Color.blue);
             Debug.DrawLine(transform.position, transform.position + moveDirection * height * 3, Color.green);
-
-            Debug.Log(hitInfo.distance);
-            Debug.Log(gravMoveDist.y);
-            Debug.Log(grounded);
 
         }
     }
