@@ -3,21 +3,22 @@
 public class PlayerMovement : MonoBehaviour
 {
 
-    public float turnSpeed;
-    public float moveSpeed;
-    private Vector3 moveDirection;
-    public float height;
-    public float heightPadding;
-    public LayerMask ground;
-    public float maxGroundAngle = 150;
-    public bool debug;
-    public float gravityScale;
-    public float width;
+    [SerializeField]
+    private float turnSpeed, moveSpeed, height, heightPadding, maxGroundAngle, gravityScale, width;
+
+    [SerializeField]
+    private LayerMask ground;
+
+    [SerializeField]
+    private bool debug, holding;
+
+    [SerializeField]
+    private int drop;
 
     private Vector3 prevGroundMove;
     private Vector3 groundMove;
     private Transform prevGround;
-
+    private Vector3 moveDirection;
     private float counter;
     private Vector3 prevScale;
     private float gravDistDiff;
@@ -41,6 +42,8 @@ public class PlayerMovement : MonoBehaviour
     {
         // If player not touching the ground initially gravity needs to be calculated
         initGravDist = transform.position.y;
+        holding = false;
+        drop = 0;
     }
 
 
@@ -91,13 +94,10 @@ public class PlayerMovement : MonoBehaviour
 
             // When gravity needs to act the height position must be stored
             initGravDist = transform.position.y;
-            Debug.Log(hitInfo.transform.name);
         }
         else
         {
-            grounded = false;
-            Debug.Log(counter);
-            counter++;
+            grounded = false;;
         }
 
     }
@@ -177,11 +177,6 @@ public class PlayerMovement : MonoBehaviour
         // If surface is not too steep
         if (groundAngle < maxGroundAngle)
         {
-            if (Input.GetButton("Submit"))
-            {
-                transform.position += (moveDirection * moveSpeed) * Time.deltaTime;
-
-            }
             transform.position += (moveDirection * moveSpeed) * Time.deltaTime;
         }
     }

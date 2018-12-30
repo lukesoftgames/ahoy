@@ -125,6 +125,7 @@ GameObject:
   - component: {fileID: 150003}
   - component: {fileID: 150002}
   - component: {fileID: 150001}
+  - component: {fileID: 150006}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -148,13 +149,15 @@ MonoBehaviour:
   moveSpeed: 12.5
   height: 1
   heightPadding: 0.1
+  maxGroundAngle: 360
+  gravityScale: 1.25
+  width: 0.5
   ground:
     serializedVersion: 2
     m_Bits: 512
-  maxGroundAngle: 360
   debug: 0
-  gravityScale: 1.25
-  width: 0
+  holding: 0
+  drop: 0
 --- !u!65 &150002
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -227,6 +230,29 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &150006
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 150000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63d4420816f802748965fc71f25204e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  holding: 0
+  pickupRadius: 5
+  offsetFactor: 1
+  loadRadius: 5
+  itemLayer:
+    serializedVersion: 2
+    m_Bits: 1024
+  cannonLayer:
+    serializedVersion: 2
+    m_Bits: 2048
+  holdingItem: {fileID: 0}
 --- !u!1 &158616809
 GameObject:
   m_ObjectHideFlags: 0
@@ -591,7 +617,8 @@ GameObject:
   - component: {fileID: 1464250871}
   - component: {fileID: 1464250870}
   - component: {fileID: 1464250874}
-  m_Layer: 0
+  - component: {fileID: 1464250875}
+  m_Layer: 10
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -682,17 +709,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c56c26cff32ec014ba122bf0a6092ec1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 150005}
-  offset: {x: 1, y: 0, z: 1}
-  maxDist: 3
-  debug: 1
+--- !u!114 &1464250875
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1464250869}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92d8c9332d251014a942498fb5a49f02, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   height: 0.375
-  heightPadding: 0.05
+  heightPadding: 0.01
   ground:
     serializedVersion: 2
     m_Bits: 512
+  held: 0
+  loaded: 0
   gravityScale: 1.5
-  offsetFactor: 1
 --- !u!1 &1866242711
 GameObject:
   m_ObjectHideFlags: 0
