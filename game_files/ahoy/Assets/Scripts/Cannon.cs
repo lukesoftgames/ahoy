@@ -1,18 +1,33 @@
 ﻿using UnityEngine;
 
-public class Cannon : MonoBehaviour
+public class Cannon : Object
 {
-    public bool loaded;
-    public Transform loadedItem;
+
+    private bool readyToFire;
+    private Transform loadedObject;
     // Start is called before the first frame update
     void Start()
     {
         
     }
 
-    // Update is called once per frame
-    void Update()
+    public bool GetReadyToFire()
     {
-        
+        return readyToFire;
+    }
+
+    public Transform GetLoadedObject()
+    {
+        return loadedObject;
+    }
+
+    public void SetReadyToFire(bool inpReadyToFire)
+    {
+        readyToFire = inpReadyToFire;
+    }
+
+    public void SetLoadedObject(Transform inpObject)
+    {
+        loadedObject = inpObject;
     }
 }
