@@ -44,6 +44,7 @@ Another thing worth considering is that if a method is starting to get very long
 
 <h2>File System Structure</h2>
 Everything should be stored in files. For a start, nothing should be in the top level directory except other files. Separate scripts in a manner that makes sense, etc. It's quite common sense dependent, you just need to be paying attention. An example file system within <b>Unity</b> might be:
+
 * Assets
     * Prefabs
         * <i>Player.prefab</i>
