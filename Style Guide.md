@@ -18,6 +18,7 @@ To make it easier to share code between contributors, follow the below style for
 * Space after a comma between parameters.
 * Empty line between the end of a code block and the next code block.
 * 'else' statements start on the same line as the closing brace for the previous control flow option.
+
 ```csharp
     private int foo(int bar, bool foofoo) {
         if(foofoo) {
