@@ -3,6 +3,7 @@
 
 <h2>SOLID Principles</h2>
 Solid programming principles are a set of object oriented programming principles that aim to make software designs more understandable, flexible and maintainable. They are particularly useful in <i>agile development</i> which will be ideal for us. Please familiarise yourself with the ideas behind the principles - I promise that they're not difficult, and will save us a lot of time and anguish as the project grows and changes. The wiki for SOLID can be found at [SOLID Principles of Programming](https://en.wikipedia.org/wiki/SOLID), and [this series of videos](https://www.youtube.com/watch?v=Eyr7_l5NMds&list=PLB5_EOMkLx_WjcjrsGUXq9wpTib3NCuqg&index=1) gives an excellent and concise explanation, with clear examples of why the principles are useful. A brief summary of the principles is as follows:
+
 1. <b>S</b>ingle responsibility principle - each class should have only a single responsibility. A change to only one part of the specification should affect the class' implementation.
 1. <b>O</b>pen/Close principle - software entities should be open for extension but closed for modification (this is the least intuitive principle, I highly recommend the second video in the series for an explanation).
 1. <b>L</b>iskov substitution principle - objects in an implementation should be replaceable with instances of their subtypes without needing to alter the program, or change its control flow, etc.
