@@ -1,15 +1,15 @@
 ﻿using UnityEngine;
 
 public static class Noise {
-    public static float[,] generateNoiseMap(int seed, int mapHeight, int mapWidth, float scale, int octaves, float persistence, float lacunarity) {
+    public static float[,] generateNoiseMap(int seed, int mapHeight, int mapWidth, float scale, int octaves, float persistence, float lacunarity, Vector2 offset) {
         float[,] noiseMap = new float[mapWidth, mapHeight];
 
         System.Random prng = new System.Random(seed);
         Vector2[] octaveOffsets = new Vector2[octaves];
 
         for(int i = 0; i < octaves; i++) {
-            float offsetX = prng.Next(-100000, 100000);
-            float offsetY = prng.Next(-100000, 100000);
+            float offsetX = prng.Next(-100000, 100000) + offset.x;
+            float offsetY = prng.Next(-100000, 100000) + offset.y;
 
             octaveOffsets[i] = new Vector2(offsetX, offsetY);
         }
