@@ -69,6 +69,8 @@ public class InfiniteTerrain : MonoBehaviour {
         private int prevLOD = -1;
         private LODInfo[] detailLevels;
         private LODMesh[] lodMeshes;
+        private LODMesh colLODMesh;
+        private MeshCollider col;
         private MeshFilter filter;
         private MeshRenderer rend;
         private Vector2 position;
@@ -82,6 +84,7 @@ public class InfiniteTerrain : MonoBehaviour {
             meshObj = new GameObject("Terrain Chunk");
             rend = meshObj.AddComponent<MeshRenderer>();
             filter = meshObj.AddComponent<MeshFilter>();
+            col = meshObj.AddComponent<MeshCollider>();
             meshObj.transform.position = posV3;
             meshObj.transform.parent = parent;
             rend.material = material;
@@ -90,6 +93,10 @@ public class InfiniteTerrain : MonoBehaviour {
             lodMeshes = new LODMesh[detailLevels.Length];
             for(int i = 0; i < detailLevels.Length; i++) {
                 lodMeshes[i] = new LODMesh(detailLevels[i].lod, updateChunk);
+
+                if(detailLevels[i].useForCollider) {
+                    colLODMesh = lodMeshes[i];
+                }
             }
 
             landGenerator.requestLandData(position, onLandDataReceived);
@@ -131,10 +138,30 @@ public class InfiniteTerrain : MonoBehaviour {
                         if(lodMesh.hasMesh) {
                             prevLOD = lodIndex;
                             filter.mesh = lodMesh.mesh;
+
+                            if(lodIndex == 0) {
+                                col.sharedMesh = colLODMesh.mesh;
+                            }
                         } else if(!lodMesh.hasRequestedMesh) {
                             lodMesh.requestMesh(landData);
+
+                            if(lodIndex == 0) {
+                                colLODMesh.requestMesh(landData);
+                            }
                         }
                     }
+
+                    /*Actual video
+                     * 
+                     if(lodIndex == 0) {
+                        if(colLODMesh.hasMesh) {
+                            col.sharedMesh = colLODMesh.mesh;
+                        } else if(!colLODMesh.hasRequestedMesh) {
+                            colLODMesh.requestMesh(landData);
+                        }
+                     }
+                     *
+                     */
                 }
 
                 setVisible(visible);
@@ -171,5 +198,6 @@ public class InfiniteTerrain : MonoBehaviour {
     public struct LODInfo {
         public int lod;
         public float visibleDistThreshold;
+        public bool useForCollider;
     }
 }
