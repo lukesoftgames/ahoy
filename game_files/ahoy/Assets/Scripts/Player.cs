@@ -25,6 +25,7 @@ public class Player : Object
     private LayerMask itemLayer, cannonLayer;
 
     private Transform holdingItem;
+    private Transform firingItem;
     private Collider[] cannonColliders;
     private Collider[] itemColliders;
 
@@ -35,6 +36,9 @@ public class Player : Object
     private Transform item;
     private float dist;
     private int minIdx;
+    private Vector3 initCannonLocation;
+    private bool cannonEnter;
+    private Transform firingEnd;
 
     // Start is called before the first frame update
     void Start()
@@ -60,10 +64,11 @@ public class Player : Object
 
         }
 
+        InCannonRange();
+
         // Press A
         if (Input.GetButtonDown("Submit"))
         {
-            InCannonRange();
             if (holding)
             {
                 if (nearCannon)
@@ -84,16 +89,61 @@ public class Player : Object
                 }
                 else if (nearCannon)
                 {
+                    Debug.Log("fire");
+                    FireCannon();
+                }
+            }
+        }
+
+        if (Input.GetKeyDown("x"))
+        {
+            if (!holding)
+            {
+                if (nearCannon)
+                {
                     UnloadCannon();
                 }
             }
         }
+
+        Debug.Log(nearCannon);
     }
 
     void GetInput()
     {
         input.x = Input.GetAxis("Horizontal");
         input.y = Input.GetAxis("Vertical");
+    }
+
+    void FireCannon()
+    {
+        cannon = cannonColliders[0].transform;
+
+        if (!cannon.GetComponent<Cannon>().GetReadyToFire())
+        {
+            return;
+        }
+        else
+        {
+            firingItem = cannon.GetComponent<Cannon>().GetLoadedObject();
+            firingItem.SetParent(null);
+
+            firingEnd = cannon.GetComponent<Cannon>().GetCannonEnd();
+            firingItem.position = firingEnd.position;
+            firingItem.GetComponent<Object>().SetFired(true);
+
+            cannon.GetComponent<Cannon>().SetReadyToFire(false);
+            cannon.GetComponent<Cannon>().SetLoadedObject(null);
+
+            firingItem.GetComponent<Object>().SetLoaded(false);
+            firingItem.GetComponent<Object>().SetHeld(false);
+            firingItem.GetComponent<Object>().SetForward(firingEnd.forward);
+            firingItem.GetComponent<Renderer>().enabled = true;
+
+
+
+        }
+
     }
 
     void CalculateDirection()
@@ -163,14 +213,21 @@ public class Player : Object
 
     void InCannonRange()
     {
+
         cannonColliders = Physics.OverlapSphere(transform.position, loadRadius, cannonLayer);
         if (cannonColliders.Length == 0)
         {
             nearCannon = false;
+            cannonEnter = false;
+
         }
         else
         {
             nearCannon = true;
+            //cannon = cannonColliders[0].transform;
+
+            //Debug.Log(cannonColliders[0].transform.forward);
+
         }
     }
 

@@ -20,6 +20,9 @@ public class Object : MonoBehaviour
     private bool grounded;
     private bool held;
     private bool loaded;
+    private bool fired;
+    private int power = 300;
+    private Vector3 initForward;
     private RaycastHit hitInfo;
 
     // Start is called before the first frame update
@@ -31,7 +34,20 @@ public class Object : MonoBehaviour
     // Update is called once per frame
     protected virtual void Update()
     {
-        Gravity();
+        if (!fired)
+        {
+            Gravity();
+        }
+        else
+        {
+            Fire();
+        }
+    }
+
+
+    protected void Fire()
+    {
+        transform.position = transform.position + initForward*power*Time.deltaTime;
     }
 
     protected void Gravity()
@@ -91,7 +107,7 @@ public class Object : MonoBehaviour
 
     }
 
-    protected bool GetGrounded()
+    public bool GetGrounded()
     {
         return grounded;
     }
@@ -124,5 +140,15 @@ public class Object : MonoBehaviour
     public void SetLoaded(bool inpLoaded)
     {
         loaded = inpLoaded;
+    }
+
+    public void SetFired(bool inpFired)
+    {
+        fired = inpFired;
+    }
+
+    public void SetForward(Vector3 inpForward)
+    {
+        initForward = inpForward;
     }
 }

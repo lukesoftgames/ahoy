@@ -18,7 +18,6 @@ public class SimpleFollowPlayer : MonoBehaviour
         Vector3 desiredPosition = player.position + offset;
         currentCameraPosition = transform.position - offset;
         distError = player.position - currentCameraPosition;
-        Debug.Log(transform.forward*100);
         float smoothSpeed = Mathf.Pow(distError.magnitude,2)/100 * Time.deltaTime * cameraSpeedScaler;
         Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed);
         transform.position = smoothedPosition;
