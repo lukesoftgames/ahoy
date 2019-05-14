@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 public static class MeshGenerator {
-    public static MeshData generateTerrainMesh(float[,] heightMap, float heightMultiplier, float flattening, int levelOfDetail) {
+    public static MeshData generateTerrainMesh(float[,] heightMap, float heightMultiplier, int levelOfDetail) {
         int height= heightMap.GetLength(1);
         int width = heightMap.GetLength(0);
         int simplificationIncrement = (levelOfDetail == 0) ? 1 : levelOfDetail * 2;
@@ -14,7 +14,7 @@ public static class MeshGenerator {
 
         for(int y = 0; y < height; y += simplificationIncrement) {
             for(int x  = 0; x < width; x += simplificationIncrement) {
-                float curHeight = Mathf.Clamp(heightMap[x, y] * heightMultiplier - flattening, 0, float.MaxValue);
+                float curHeight = Mathf.Clamp(heightMap[x, y] * heightMultiplier, 0, float.MaxValue);
                 meshData.vertices[vertexIndex] = new Vector3(topLeftX + x, curHeight, topLeftZ - y);
                 meshData.uvs[vertexIndex] = new Vector2(x / (float)width, y / (float)height);
 

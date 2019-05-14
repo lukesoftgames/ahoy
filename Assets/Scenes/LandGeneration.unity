@@ -399,7 +399,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 847afd5b1e638b342b47a59dfbcf3546, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  flattening: 25
+  curveFactor: 2
+  shiftFactor: 1.5
+  frequency: 0.5
   lacunarity: 2
   meshHeightMultiplier: 35
   noiseScale: 20

@@ -4,7 +4,10 @@ using System.Threading;
 using UnityEngine;
 
 public class LandGenerator : MonoBehaviour {
-    [SerializeField] private float flattening;
+    [Header("Island Size and Frequency")]
+    [SerializeField] private float curveFactor;
+    [SerializeField] private float shiftFactor;
+    [SerializeField] private float frequency;
     [SerializeField] private float lacunarity;
     [SerializeField] private float meshHeightMultiplier;
     [SerializeField] private float noiseScale;
@@ -42,7 +45,17 @@ public class LandGenerator : MonoBehaviour {
     }
 
     private float[,] generateData(Vector2 centre) {
-        return Noise.generateNoiseMap(seed, CHUNK_SIZE, CHUNK_SIZE, noiseScale, octaves, persistence, lacunarity, centre);
+        float[,] mapData = Noise.generateNoiseMap(seed, CHUNK_SIZE, CHUNK_SIZE, noiseScale, octaves, persistence, lacunarity, centre);
+        float[,] falloffNoise = Noise.generateNoiseMap(seed / 2, CHUNK_SIZE, CHUNK_SIZE, noiseScale, octaves, persistence, lacunarity, centre);
+        float[,] islandGenerator = FalloffGenerator.generateFalloffMap(falloffNoise, CHUNK_SIZE, curveFactor, shiftFactor, frequency);
+
+        for(int i = 0; i < CHUNK_SIZE; i++) {
+            for(int j = 0; j < CHUNK_SIZE; j++) {
+                mapData[i, j] -= islandGenerator[i, j];
+            }
+        }
+
+        return mapData;
     }
 
     private void landDataThread(Vector2 centre, Action<float[,]> callback) {
@@ -54,7 +67,7 @@ public class LandGenerator : MonoBehaviour {
     }
 
     public void meshDataThread(float[,] mapData, int lod, Action<MeshData> callback) {
-        MeshData meshData = MeshGenerator.generateTerrainMesh(mapData, meshHeightMultiplier, flattening, lod);
+        MeshData meshData = MeshGenerator.generateTerrainMesh(mapData, meshHeightMultiplier, lod);
 
         lock(meshDataThreadQueue) {
             meshDataThreadQueue.Enqueue(new LandThreadInfo<MeshData>(callback, meshData));
