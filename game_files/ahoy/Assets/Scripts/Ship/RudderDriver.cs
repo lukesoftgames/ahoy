@@ -1,18 +1,23 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 public class RudderDriver : MonoBehaviour
 {
     // Start is called before the first frame update
     public Rigidbody parentRB;
-
-    private float rudderForce;
+    public Slider slider;
+    private float rudderForce = 0;
 
     public float maxRudderForce;
 
     public Transform turningForceTrans;
     
+    public float[] speed;
+
+    public float[] turning;
+
+    public int currentSpeed;
     private Vector3 turningForcePosition;
     void Start()
     {
@@ -24,23 +29,18 @@ public class RudderDriver : MonoBehaviour
     {
         float waveYPos = WaterController.current.GetWaveYPos(transform.position, Time.time);
         if (transform.position.y < waveYPos) {
-            //apply force
+            //apply forc
             float dir = Input.GetAxis("Horizontal");
-            if (dir != 0) {
-                float t = Time.deltaTime;
-                rudderForce += dir * t;
-                transform.Rotate(new Vector3(0,dir * t,0));
+            float dampenedDir = dir * 0.01f;
+            if (Mathf.Abs(rudderForce + dampenedDir) < maxRudderForce) {
+                rudderForce += dampenedDir;
             }
-            Vector3 rudderForceVector = transform.right * rudderForce;
-            
-            parentRB.AddForceAtPosition(rudderForceVector*100f*-1, turningForcePosition);
-        } else {
-            if (rudderForce != 0) {
-                rudderForce += Mathf.Sign(rudderForce) * -1 * Time.deltaTime * 100f;
-            } 
-        }
-        parentRB.AddForceAtPosition(transform.forward*40000f, transform.position);
-
+            slider.value = rudderForce;
+            parentRB.AddForceAtPosition(transform.right*turning[currentSpeed]*rudderForce, turningForcePosition);
+            //transform.Rotate(new Vector3(0,dir*Time.deltaTime*10f,0));
+        } 
+        parentRB.AddForceAtPosition(transform.forward*speed[currentSpeed], transform.position);
+        
         
        
     }
