@@ -128,12 +128,9 @@ public class Player : Object
             firingItem = cannon.GetComponent<Cannon>().GetLoadedObject();
             firingItem.SetParent(null);
 
-<<<<<<< HEAD:game_files/ahoy/Assets/Scripts/PlayerControl/Player.cs
             firingEnd = cannon.GetComponent<Cannon>().GetCannonEnd();
             firingItem.position = firingEnd.position;
-=======
-            firingItem.position = cannon.GetComponent<Cannon>().GetCannonHeight();
->>>>>>> 1207e6c9168fa51ee51032b31e06cd8093d5cd00:game_files/ahoy/Assets/Scripts/Player.cs
+
             firingItem.GetComponent<Object>().SetFired(true);
 
             cannon.GetComponent<Cannon>().SetReadyToFire(false);
@@ -141,11 +138,8 @@ public class Player : Object
 
             firingItem.GetComponent<Object>().SetLoaded(false);
             firingItem.GetComponent<Object>().SetHeld(false);
-<<<<<<< HEAD:game_files/ahoy/Assets/Scripts/PlayerControl/Player.cs
             firingItem.GetComponent<Object>().SetForward(firingEnd.forward);
-=======
-            firingItem.GetComponent<Object>().SetForward(cannon.forward);
->>>>>>> 1207e6c9168fa51ee51032b31e06cd8093d5cd00:game_files/ahoy/Assets/Scripts/Player.cs
+
             firingItem.GetComponent<Renderer>().enabled = true;
 
 
@@ -226,20 +220,14 @@ public class Player : Object
         if (cannonColliders.Length == 0)
         {
             nearCannon = false;
-<<<<<<< HEAD:game_files/ahoy/Assets/Scripts/PlayerControl/Player.cs
             cannonEnter = false;
-=======
->>>>>>> 1207e6c9168fa51ee51032b31e06cd8093d5cd00:game_files/ahoy/Assets/Scripts/Player.cs
 
         }
         else
         {
             nearCannon = true;
-<<<<<<< HEAD:game_files/ahoy/Assets/Scripts/PlayerControl/Player.cs
             //cannon = cannonColliders[0].transform;
 
-=======
->>>>>>> 1207e6c9168fa51ee51032b31e06cd8093d5cd00:game_files/ahoy/Assets/Scripts/Player.cs
             //Debug.Log(cannonColliders[0].transform.forward);
 
         }
@@ -341,7 +329,7 @@ public class Player : Object
         for (int i = 0; i < itemColliders.Length; i++)
         {
             item = itemColliders[i].transform;
-            
+
             if (item.GetComponent<Object>().GetHeld())
             {
                 Debug.Log("OOps");
