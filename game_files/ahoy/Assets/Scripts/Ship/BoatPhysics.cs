@@ -10,6 +10,7 @@ public class BoatPhysics : MonoBehaviour
     public GameObject boatMeshObj;
     public GameObject underWaterObj;
     public GameObject aboveWaterObj;
+    public Transform centreOfMassTrans;
 
     //Change the center of mass
     public Vector3 centerOfMass;
@@ -31,6 +32,7 @@ public class BoatPhysics : MonoBehaviour
     void Awake() 
     {
         boatRB = this.GetComponent<Rigidbody>();
+        centerOfMass = centreOfMassTrans.localPosition;
     }
 
 	void Start() 

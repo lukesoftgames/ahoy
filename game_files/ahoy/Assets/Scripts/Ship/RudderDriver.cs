@@ -13,15 +13,21 @@ public class RudderDriver : MonoBehaviour
 
     public Transform turningForceTrans;
     
+    public float rudderDeadZone;
+
     public float[] speed;
 
     public float[] turning;
+    public GameObject boat;
 
+    private BoatPhysics boatPhysics;
     public int currentSpeed;
     private Vector3 turningForcePosition;
+
     void Start()
     {
         turningForcePosition = turningForceTrans.position;
+        boatPhysics = boat.GetComponent<BoatPhysics>();
     }
 
     // Update is called once per frame
@@ -31,14 +37,29 @@ public class RudderDriver : MonoBehaviour
         if (transform.position.y < waveYPos) {
             //apply forc
             float dir = Input.GetAxis("Horizontal");
-            float dampenedDir = dir * 0.01f;
+            float dampenedDir = dir * 0.01f * -1;
             if (Mathf.Abs(rudderForce + dampenedDir) < maxRudderForce) {
                 rudderForce += dampenedDir;
+            } 
+            slider.value = rudderForce*-1;
+            if (Mathf.Abs(rudderForce) > rudderDeadZone) {
+                parentRB.AddForceAtPosition(transform.right*turning[currentSpeed]*rudderForce, turningForcePosition);
             }
-            slider.value = rudderForce;
-            parentRB.AddForceAtPosition(transform.right*turning[currentSpeed]*rudderForce, turningForcePosition);
-            //transform.Rotate(new Vector3(0,dir*Time.deltaTime*10f,0));
         } 
+        if (Input.GetKeyDown(KeyCode.W)) {
+            if (currentSpeed < speed.Length) {
+                currentSpeed++;
+                //boatPhysics.centerOfMass = new Vector3(0,0,currentSpeed*0.5f);
+                turningForceTrans.position = new Vector3(0,0,currentSpeed+1f);
+            } 
+        } 
+        if (Input.GetKeyDown(KeyCode.S)) {
+            if (currentSpeed > 0) {
+                currentSpeed--; 
+                //boatPhysics.centerOfMass = new Vector3(0,0,currentSpeed*0.5f);
+              
+            }
+        }
         parentRB.AddForceAtPosition(transform.forward*speed[currentSpeed], transform.position);
         
         

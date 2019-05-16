@@ -18,7 +18,7 @@ public class WaveTypes
         float z = position.z;
 
         float waveType = 0f;
-        waveType = x * y + z;
+        waveType = x + y + z;
         //waveType = x * z;
 
 
