@@ -7,7 +7,10 @@ public class LandGenerator : MonoBehaviour {
     [Header("Island Size and Frequency")]
     [SerializeField] private float curveFactor;
     [SerializeField] private float shiftFactor;
-    [SerializeField] private float frequency;
+    private float[,] islandFalloff;
+
+    [Header("Noise Generation Settings")]
+    [SerializeField] private float flattening;
     [SerializeField] private float lacunarity;
     [SerializeField] private float meshHeightMultiplier;
     [SerializeField] private float noiseScale;
@@ -17,6 +20,14 @@ public class LandGenerator : MonoBehaviour {
     [SerializeField] private int seed;
     private Queue<LandThreadInfo<float[,]>> landDataThreadQueue = new Queue<LandThreadInfo<float[,]>>();
     private Queue<LandThreadInfo<MeshData>> meshDataThreadQueue = new Queue<LandThreadInfo<MeshData>>();
+
+    private void Awake() {
+        islandFalloff = FalloffGenerator.generateFalloff(CHUNK_SIZE, curveFactor, shiftFactor);
+
+        if(seed == 0) {
+            seed = (int)UnityEngine.Random.Range(-100000000.0f, 100000000.0f);
+        }
+    }
 
     private void OnValidate() {
         if(lacunarity < 1) {
@@ -44,22 +55,32 @@ public class LandGenerator : MonoBehaviour {
         }
     }
 
-    private float[,] generateData(Vector2 centre) {
-        float[,] mapData = Noise.generateNoiseMap(seed, CHUNK_SIZE, CHUNK_SIZE, noiseScale, octaves, persistence, lacunarity, centre);
-        float[,] falloffNoise = Noise.generateNoiseMap(seed / 2, CHUNK_SIZE, CHUNK_SIZE, noiseScale, octaves, persistence, lacunarity, centre);
-        float[,] islandGenerator = FalloffGenerator.generateFalloffMap(falloffNoise, CHUNK_SIZE, curveFactor, shiftFactor, frequency);
-
-        for(int i = 0; i < CHUNK_SIZE; i++) {
-            for(int j = 0; j < CHUNK_SIZE; j++) {
-                mapData[i, j] -= islandGenerator[i, j];
+    private float[,] generateData(bool generateIsland, Vector2 centre) {
+        if(generateIsland) {
+            float[,] mapData = Noise.generateNoiseMap(seed, CHUNK_SIZE, CHUNK_SIZE, noiseScale, octaves, persistence, lacunarity, centre);
+            
+            for(int i = 0; i < CHUNK_SIZE; i++) {
+                for(int j = 0; j < CHUNK_SIZE; j++) {
+                    mapData[i, j] -= islandFalloff[i, j];
+                }
             }
-        }
 
-        return mapData;
+            return mapData;
+        } else {
+            float[,] mapData = new float[CHUNK_SIZE, CHUNK_SIZE];
+
+            for(int i = 0; i < CHUNK_SIZE; i++) {
+                for(int j = 0; j < CHUNK_SIZE; j++) {
+                    mapData[i, j] = 0;
+                }
+            }
+
+            return mapData;
+        }
     }
 
-    private void landDataThread(Vector2 centre, Action<float[,]> callback) {
-        float[,] heightMap = generateData(centre);
+    private void landDataThread(bool generateIsland, Vector2 centre, Action<float[,]> callback) {
+        float[,] heightMap = generateData(generateIsland, centre);
 
         lock(landDataThreadQueue) {
             landDataThreadQueue.Enqueue(new LandThreadInfo<float[,]>(callback, heightMap));
@@ -67,16 +88,16 @@ public class LandGenerator : MonoBehaviour {
     }
 
     public void meshDataThread(float[,] mapData, int lod, Action<MeshData> callback) {
-        MeshData meshData = MeshGenerator.generateTerrainMesh(mapData, meshHeightMultiplier, lod);
+        MeshData meshData = MeshGenerator.generateTerrainMesh(mapData, meshHeightMultiplier, flattening, lod);
 
         lock(meshDataThreadQueue) {
             meshDataThreadQueue.Enqueue(new LandThreadInfo<MeshData>(callback, meshData));
         }
     }
 
-    public void requestLandData(Vector2 centre, Action<float[,]> callback) {
+    public void requestLandData(bool generateIsland, Vector2 centre, Action<float[,]> callback) {
         ThreadStart threadStart = delegate {
-            landDataThread(centre, callback);
+            landDataThread(generateIsland, centre, callback);
         };
 
         new Thread(threadStart).Start();
