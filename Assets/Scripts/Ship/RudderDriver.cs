@@ -34,8 +34,8 @@ public class RudderDriver : MonoBehaviour
     void Update()
     {
         float waveYPos = WaterController.current.GetWaveYPos(transform.position, Time.time);
-        if (transform.position.y < waveYPos) {
-            //apply forc
+        if (turningForcePosition.y < waveYPos) {
+            //apply force
             float dir = Input.GetAxis("Horizontal");
             float dampenedDir = dir * 0.01f * -1;
             if (Mathf.Abs(rudderForce + dampenedDir) < maxRudderForce) {
@@ -45,7 +45,9 @@ public class RudderDriver : MonoBehaviour
             if (Mathf.Abs(rudderForce) > rudderDeadZone) {
                 parentRB.AddForceAtPosition(transform.right*turning[currentSpeed]*rudderForce, turningForcePosition);
             }
-        } 
+        } else {
+            Debug.Log("above");
+        }
         if (Input.GetKeyDown(KeyCode.W)) {
             if (currentSpeed < speed.Length) {
                 currentSpeed++;
