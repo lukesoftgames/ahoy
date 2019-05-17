@@ -435,6 +435,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   frequency: 0.4
+  generationYOffset: -2
   detailLevels:
   - lod: 0
     visibleDistThreshold: 100

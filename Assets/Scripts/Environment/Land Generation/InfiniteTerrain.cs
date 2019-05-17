@@ -4,6 +4,7 @@ using UnityEngine;
 public class InfiniteTerrain : MonoBehaviour {
     private Dictionary<Vector2, TerrainChunk> terrainChunks = new Dictionary<Vector2, TerrainChunk>();
     [SerializeField] [Range(0, 1)] private float frequency;
+    [SerializeField] private float generationYOffset;
     private static float maxViewDist;
     private const float MOVE_THRESHOLD = 25.0f;
     private const float SQR_MOVE_THRESHOLD = MOVE_THRESHOLD * MOVE_THRESHOLD;
@@ -56,7 +57,7 @@ public class InfiniteTerrain : MonoBehaviour {
                         visibleTerrainChunks.Add(terrainChunks[viewedChunkCoord]);
                     }
                 } else {
-                    terrainChunks.Add(viewedChunkCoord, new TerrainChunk(viewedChunkCoord, detailLevels, chunkSize, frequency, transform, material));
+                    terrainChunks.Add(viewedChunkCoord, new TerrainChunk(viewedChunkCoord, detailLevels, chunkSize, frequency, generationYOffset, transform, material));
                 }
             }
         }
@@ -77,12 +78,12 @@ public class InfiniteTerrain : MonoBehaviour {
         private MeshRenderer rend;
         private Vector2 position;
 
-        public TerrainChunk(Vector2 coord, LODInfo[] detailLevels, int size, float frequency, Transform parent, Material material) {
+        public TerrainChunk(Vector2 coord, LODInfo[] detailLevels, int size, float frequency, float generationYOffset, Transform parent, Material material) {
             this.detailLevels = detailLevels;
             this.frequency = frequency;
             position = coord * size;
             bounds = new Bounds(position, Vector2.one * size);
-            Vector3 posV3 = new Vector3(position.x, 0.0f, position.y);
+            Vector3 posV3 = new Vector3(position.x, generationYOffset, position.y);
 
             meshObj = new GameObject("Terrain Chunk");
             rend = meshObj.AddComponent<MeshRenderer>();
