@@ -1,22 +1,34 @@
 fileFormatVersion: 2
-guid: b701e7d8e96466b4abd0ef240191ab5e
+guid: 089f95c91d19c4d50913f70c92d18bda
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
-    100000: Box001
-    100002: Object
-    100004: //RootNode
-    400000: Box001
-    400002: Object
-    400004: //RootNode
-    2100000: Box001Mat
-    2100002: ObjectMat
-    2300000: Box001
-    2300002: Object
-    3300000: Box001
-    3300002: Object
-    4300000: Box001
-    4300002: Object
+    100000: LOWER_SAIL
+    100002: MAIN_MAST
+    100004: SHIP
+    100006: //RootNode
+    100008: UPPER_SAIL
+    400000: LOWER_SAIL
+    400002: MAIN_MAST
+    400004: SHIP
+    400006: //RootNode
+    400008: UPPER_SAIL
+    2100000: LOWER_SAILMat
+    2100002: MAIN_MASTMat
+    2100004: SHIPMat
+    2100006: UPPER_SAILMat
+    2300000: LOWER_SAIL
+    2300002: MAIN_MAST
+    2300004: SHIP
+    2300006: UPPER_SAIL
+    3300000: LOWER_SAIL
+    3300002: MAIN_MAST
+    3300004: SHIP
+    3300006: UPPER_SAIL
+    4300000: LOWER_SAIL
+    4300002: MAIN_MAST
+    4300004: SHIP
+    4300006: UPPER_SAIL
   externalObjects: {}
   materials:
     importMaterials: 1
@@ -48,7 +60,7 @@ ModelImporter:
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: 0.005
+    globalScale: 0.1
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1

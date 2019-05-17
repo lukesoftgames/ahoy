@@ -14,8 +14,8 @@ public class Cannon : Object {
         return loadedObject;
     }
 
-    public Vector3 GetCannonHeight() {
-        return endCannon.position;
+    public Transform GetCannonEnd() {
+        return endCannon;
     }
 
     public void SetReadyToFire(bool inpReadyToFire) {
