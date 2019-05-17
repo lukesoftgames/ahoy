@@ -3,32 +3,33 @@ guid: 6b6023f7862d43443b6723d3ba8543c9
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
-    100000: //RootNode
-    100002: Cylinder001
-    100004: Object001
-    100006: Object003
-    100008: Object005
-    400000: //RootNode
-    400002: Cylinder001
-    400004: Object001
-    400006: Object003
-    400008: Object005
-    2100000: Cylinder001Mat
-    2100002: Object001Mat
-    2100004: Object003Mat
-    2100006: Object005Mat
-    2300000: Cylinder001
-    2300002: Object001
-    2300004: Object003
-    2300006: Object005
-    3300000: Cylinder001
-    3300002: Object001
-    3300004: Object003
-    3300006: Object005
-    4300000: Cylinder001
-    4300002: Object001
-    4300004: Object003
-    4300006: Object005
+    100000: Bar_Extrude
+    100002: Bar_Indent
+    100004: //RootNode
+    100006: Bottom_Rings
+    100008: Wood
+    400000: Bar_Extrude
+    400002: Bar_Indent
+    400004: //RootNode
+    400006: Bottom_Rings
+    400008: Wood
+    2100000: Bar_ExtrudeMat
+    2100002: Bar_IndentMat
+    2100004: Bottom_RingsMat
+    2100006: WoodMat
+    2300000: Bar_Extrude
+    2300002: Bar_Indent
+    2300004: Bottom_Rings
+    2300006: Wood
+    3300000: Bar_Extrude
+    3300002: Bar_Indent
+    3300004: Bottom_Rings
+    3300006: Wood
+    4300000: Bar_Extrude
+    4300002: Bar_Indent
+    4300004: Bottom_Rings
+    4300006: Wood
+    9500000: //RootNode
   externalObjects: {}
   materials:
     importMaterials: 1
@@ -60,7 +61,7 @@ ModelImporter:
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: 1
+    globalScale: 0.01
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
@@ -82,7 +83,7 @@ ModelImporter:
     secondaryUVPackMargin: 4
     useFileScale: 1
     previousCalculatedGlobalScale: 1
-    hasPreviousCalculatedGlobalScale: 0
+    hasPreviousCalculatedGlobalScale: 1
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
@@ -109,7 +110,7 @@ ModelImporter:
     hasExtraRoot: 0
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 0
+  animationType: 2
   humanoidOversampling: 1
   additionalBone: 0
   userData: 

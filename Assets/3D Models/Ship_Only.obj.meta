@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 089f95c91d19c4d50913f70c92d18bda
+guid: fceb5ffb7ab42454e8ed0c5ca554917a
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
@@ -29,6 +29,7 @@ ModelImporter:
     4300002: MAIN_MAST
     4300004: SHIP
     4300006: UPPER_SAIL
+    9500000: //RootNode
   externalObjects: {}
   materials:
     importMaterials: 1
@@ -81,8 +82,8 @@ ModelImporter:
     secondaryUVHardAngle: 88
     secondaryUVPackMargin: 4
     useFileScale: 1
-    previousCalculatedGlobalScale: 1
-    hasPreviousCalculatedGlobalScale: 0
+    previousCalculatedGlobalScale: 0.01
+    hasPreviousCalculatedGlobalScale: 1
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
@@ -109,7 +110,7 @@ ModelImporter:
     hasExtraRoot: 0
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 0
+  animationType: 2
   humanoidOversampling: 1
   additionalBone: 0
   userData: 
