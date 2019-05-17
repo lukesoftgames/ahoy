@@ -48,14 +48,14 @@ public class RudderDriver : MonoBehaviour
         } else {
             Debug.Log("above");
         }
-        if (Input.GetKeyDown(KeyCode.W)) {
-            if (currentSpeed < speed.Length) {
+        if (Input.GetKeyDown(KeyCode.Z)) {
+            if (currentSpeed < 2) {
                 currentSpeed++;
                 //boatPhysics.centerOfMass = new Vector3(0,0,currentSpeed*0.5f);
                 turningForceTrans.position = new Vector3(0,0,currentSpeed+1f);
             } 
         } 
-        if (Input.GetKeyDown(KeyCode.S)) {
+        if (Input.GetKeyDown(KeyCode.X)) {
             if (currentSpeed > 0) {
                 currentSpeed--; 
                 //boatPhysics.centerOfMass = new Vector3(0,0,currentSpeed*0.5f);

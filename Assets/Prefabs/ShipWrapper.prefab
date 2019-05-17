@@ -1,32 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &3072729510044717186
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3072729510961151977}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 458ccc508ccde4e778c0ce5e711d3318, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  parentRB: {fileID: 3072729510223680825}
-  slider: {fileID: 0}
-  maxRudderForce: 10
-  turningForceTrans: {fileID: 3072729510540026950}
-  rudderDeadZone: 0
-  speed:
-  - 100000
-  - 0
-  - 0
-  turning:
-  - 2500
-  - 0
-  - 0
-  boat: {fileID: 3072729510223778726}
-  currentSpeed: 0
 --- !u!54 &3072729510223680825
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -43,6 +16,28 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!64 &3072729510223680824
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3072729510223778726}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Convex: 1
+  m_CookingOptions: 14
+  m_Mesh: {fileID: 4300004, guid: fceb5ffb7ab42454e8ed0c5ca554917a, type: 3}
+--- !u!33 &3072729510223680830
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3072729510223778726}
+  m_Mesh: {fileID: 0}
 --- !u!23 &3072729510223680831
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -80,28 +75,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!33 &3072729510223680830
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3072729510223778726}
-  m_Mesh: {fileID: 0}
---- !u!64 &3072729510223680824
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3072729510223778726}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Convex: 1
-  m_CookingOptions: 14
-  m_Mesh: {fileID: 4300004, guid: fceb5ffb7ab42454e8ed0c5ca554917a, type: 3}
 --- !u!114 &3072729510223680829
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -118,7 +91,7 @@ MonoBehaviour:
   underWaterObj: {fileID: 3072729511350932633}
   aboveWaterObj: {fileID: 3072729510339887604}
   centreOfMassTrans: {fileID: 3072729510583692013}
-  centerOfMass: {x: 0, y: 0, z: 0}
+  centerOfMass: {x: 0, y: 0, z: -1}
 --- !u!1 &3072729510253693915
 GameObject:
   m_ObjectHideFlags: 0
@@ -285,13 +258,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3072729510487826358}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -120.4, y: -33, z: 5.8}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalPosition: {x: 0, y: 8.66, z: 0}
   m_LocalScale: {x: 0.10000072, y: 0.10000003, z: 0.10000059}
   m_Children: []
   m_Father: {fileID: 3072729510223286150}
   m_RootOrder: 6
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!20 &3072729510487826355
 Camera:
   m_ObjectHideFlags: 0
@@ -361,12 +334,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3072729510487826358}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8b64087b303ec43ef8491561433b6e2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  boat: {fileID: 0}
+  boat: {fileID: 3072729510223286150}
 --- !u!114 &3072729510487826348
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -374,7 +347,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3072729510487826358}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d7b14e80997db465fb0c8b7bf495da73, type: 3}
   m_Name: 
@@ -434,12 +407,39 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3072729510583692018}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3072729510223286150}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3072729510044717186
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3072729510961151977}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 458ccc508ccde4e778c0ce5e711d3318, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parentRB: {fileID: 3072729510223680825}
+  slider: {fileID: 0}
+  maxRudderForce: 1
+  turningForceTrans: {fileID: 3072729510540026950}
+  rudderDeadZone: 0
+  speed:
+  - 100000
+  - 250000
+  - 400000
+  turning:
+  - 1750
+  - 1000
+  - 500
+  boat: {fileID: 3072729510223778726}
+  currentSpeed: 0
 --- !u!1 &3072729511350932633
 GameObject:
   m_ObjectHideFlags: 0
@@ -524,10 +524,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3072729510459293750}
     m_Modifications:
-    - target: {fileID: 100006, guid: fceb5ffb7ab42454e8ed0c5ca554917a, type: 3}
-      propertyPath: m_Name
-      value: Ship_Only
-      objectReference: {fileID: 0}
     - target: {fileID: 400006, guid: fceb5ffb7ab42454e8ed0c5ca554917a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -571,6 +567,10 @@ PrefabInstance:
     - target: {fileID: 400006, guid: fceb5ffb7ab42454e8ed0c5ca554917a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 100006, guid: fceb5ffb7ab42454e8ed0c5ca554917a, type: 3}
+      propertyPath: m_Name
+      value: Ship_Only
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fceb5ffb7ab42454e8ed0c5ca554917a, type: 3}
