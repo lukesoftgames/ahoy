@@ -293,7 +293,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 898390692}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f2d87e21b840ac646941b273a06adcc0, type: 3}
+  m_Script: {fileID: 11500000, guid: 0e91c953f22628a4aacc198667e354a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   height: 1
@@ -303,11 +303,11 @@ MonoBehaviour:
   ground:
     serializedVersion: 2
     m_Bits: 512
-  turnSpeed: 7.5
-  moveSpeed: 11
+  turnSpeed: 10
+  moveSpeed: 10
   maxGroundAngle: 150
   pickupRadius: 5
-  offsetFactor: 2
+  offsetFactor: 1
   loadRadius: 5
   itemLayer:
     serializedVersion: 2
