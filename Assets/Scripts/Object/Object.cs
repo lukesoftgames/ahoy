@@ -87,7 +87,8 @@ public class Object : MonoBehaviour {
         }
     }
 
-    protected bool GetGrounded() {
+    public bool GetGrounded()
+    {
         return grounded;
     }
 
@@ -122,4 +123,4 @@ public class Object : MonoBehaviour {
     public void SetForward(Vector3 inpForward) {
         initForward = inpForward;
     }
-}   
+}
