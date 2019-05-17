@@ -106,7 +106,6 @@ public class Player : Object
             }
         }
 
-        Debug.Log(nearCannon);
     }
 
     void GetInput()
