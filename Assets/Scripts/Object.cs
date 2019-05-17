@@ -107,7 +107,7 @@ public class Object : MonoBehaviour
 
     }
 
-    protected bool GetGrounded()
+    public bool GetGrounded()
     {
         return grounded;
     }
