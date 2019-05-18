@@ -339,8 +339,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isMoving: 1
-  scale: 1
-  speed: 0.5
+  scale: 0.5
+  speed: 2
   waveDistance: 40
   noiseStrength: 1
   noiseWalk: 1

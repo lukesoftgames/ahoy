@@ -38,7 +38,7 @@ public class RudderDriver : MonoBehaviour
             //apply force
             float dir = Input.GetAxis("Horizontal");
             float dampenedDir = dir * 0.01f * -1;
-            if (Mathf.Abs(rudderForce + dampenedDir) < maxRudderForce) {
+            if (Mathf.Abs(rudderForce + dampenedDir) <= maxRudderForce) {
                 rudderForce += dampenedDir;
             } 
             slider.value = rudderForce*-1;
